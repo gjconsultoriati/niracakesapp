@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 
 export default {
   colors: {
@@ -5,7 +6,9 @@ export default {
     secondary: '#FFE2CD',
 
     white: '#FFFFFF',
-    black: '#222222'
+    black: '#222222',
+
+    error: '#f40000'
   },
   fontFamily: {
     montserratRegular: 'Montserrat_400Regular',

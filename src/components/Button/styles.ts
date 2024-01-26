@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 
 export const Container = styled.TouchableOpacity`
@@ -8,6 +8,12 @@ export const Container = styled.TouchableOpacity`
   align-items: center;
   border-radius: 6px;
   margin-top: 40px;
+
+  ${({ disabled }) => disabled && (
+    css`
+      opacity: 0.4;
+    `
+  )}
 `
 export const Title = styled.Text`
   font-size: 16px;

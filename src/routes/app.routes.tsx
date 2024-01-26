@@ -1,11 +1,18 @@
 import { AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { History } from '../pages/History';
 import { Home } from '../pages/Home';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        tabBarStyle:{
+          backgroundColor: '#FFFFFF'
+        }
+      }}
+    >
       <Screen
         name='Home'
         component={Home}
@@ -20,11 +27,14 @@ export function AppRoutes() {
             )
           },
           headerShown: false,
+          tabBarActiveTintColor: '#D67888',
+         
         }}
+        
       />
-      {/* <Screen
-        name='Cart'
-        component={Cart}
+      <Screen
+        name='Historico'
+        component={History}
         options={{
           tabBarIcon: ({ color, size }) => {
             return (
@@ -36,8 +46,9 @@ export function AppRoutes() {
             )
           },
           headerShown: false,
+          tabBarActiveTintColor: '#D67888',
         }}
-      /> */}
+      />
     </Navigator>
   )
 

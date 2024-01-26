@@ -7,12 +7,13 @@ type ButtonProps = TouchableOpacityProps & {
   title: string;
   loading: boolean
 }
-export function Button({ title, loading, ...rest}: ButtonProps) {
+export function Button({ title, loading, disabled, ...rest }: ButtonProps) {
   const { colors } = useTheme()
 
   return (
     <Container
-    {...rest}
+      {...rest}
+      disabled={disabled}
     >
       {
         loading ?
@@ -20,7 +21,7 @@ export function Button({ title, loading, ...rest}: ButtonProps) {
             size={'small'}
             color={colors.primary}
           />
-          : 
+          :
           <Title>{title}</Title>
       }
     </Container>

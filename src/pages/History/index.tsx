@@ -2,14 +2,11 @@ import { Text, VStack } from "@gluestack-ui/themed";
 import { SafeAreaView } from 'react-native';
 import { useTheme } from "styled-components/native";
 import LogoSVG from '../../assets/Logo.svg';
-import { Button } from "../../components/Button";
-import { Input } from "../../components/Input";
 
-export function Home() {
+export function History() {
   const { colors, fontFamily } = useTheme()
   return (
     <SafeAreaView style={{ flex: 1 }}>
-
       <VStack
         flex={1}
         backgroundColor={colors.primary}
@@ -26,29 +23,10 @@ export function Home() {
             fontSize={16}
             fontFamily={fontFamily.montserratBold}
           >
-            Cadastre seu bolo
+            History
           </Text>
         </VStack>
-        <VStack
-          marginHorizontal={15}
-        >
-          <Input
-            label="Nome"
-          />
-          <Input
-            label="Descrição"
-          />
-          <Input
-            label="Imagem"
-          />
-          <Button
-            title="Enviar"
-            onPress={() => {}}
-            loading={false}
-            disabled={true}
-          />
-
-        </VStack>
+        {/* inputs... */}
       </VStack>
     </SafeAreaView>
   )

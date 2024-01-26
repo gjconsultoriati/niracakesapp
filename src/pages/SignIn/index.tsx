@@ -1,33 +1,27 @@
 import { Text, VStack } from "@gluestack-ui/themed";
-import { useState } from "react";
-import Toast from 'react-native-toast-message';
-import { useTheme } from 'styled-components/native';
+import { Controller } from "react-hook-form";
 import LogoSVG from '../../assets/Logo.svg';
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { useSignIn } from "./hooks/useSignIn";
+
 
 export function SignIn() {
-  const { colors, fontFamily } = useTheme()
-  const [loadingAuth, setLoadingAuth] = useState(false)
+  const {
+    loadingAuth,
+    colors,
+    fontFamily,
+    control,
+    errors,
+    isSubmitting,
+    SignIn,
+    handleSubmit,
+    isFocused,
+    hasErrorInput,
+    hasValueInput
+  } = useSignIn()
 
- function SignIn() {
-    
-    try {
-      setLoadingAuth(true)
-      
-    } catch (error) {
-      console.log({error})
-      Toast.show({
-        type: 'error',
-        text1: 'Erro ao Logar-se!😓',
-        text2: 'Tente novamente mais tarde',
-        topOffset: 60,
-        visibilityTime: 5000
-      })
-    }finally {
-      setLoadingAuth(false)
-    }
-  }
+
   return (
     <VStack
       flex={1}
@@ -63,14 +57,42 @@ export function SignIn() {
             opacity: 0.3
           }}
         />
-        <Input
-          label="Senha"
-          maxLength={8}
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onBlur, onChange, value, } }) => (
+            <Input
+              label="Senha"
+              isFocused={isFocused}
+              maxLength={8}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Digite sua senha"
+              onFocus={hasErrorInput}
+              placeholderTextColor={colors.secondary}
+              secureTextEntry
+            />
+
+          )}
         />
+
+        {
+          errors.password && (
+            <Text
+              color={colors.secondary}
+              fontFamily={fontFamily.quicksand}
+            >
+              {errors.password.message}
+            </Text>
+          )
+        }
+
         <Button
           title="Entrar"
-          onPress={SignIn}
+          onPress={handleSubmit(SignIn)}
           loading={loadingAuth}
+          disabled={isSubmitting || hasValueInput}
         />
       </VStack>
     </VStack>
