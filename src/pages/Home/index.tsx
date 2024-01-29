@@ -3,10 +3,13 @@ import { SafeAreaView } from 'react-native';
 import { useTheme } from "styled-components/native";
 import LogoSVG from '../../assets/Logo.svg';
 import { Button } from "../../components/Button";
+import { ButtonImage } from "../../components/ButtonImage";
 import { Input } from "../../components/Input";
+import { useHome } from "./useHome";
 
 export function Home() {
   const { colors, fontFamily } = useTheme()
+  const { handleCamera } = useHome()
   return (
     <SafeAreaView style={{ flex: 1 }}>
 
@@ -38,8 +41,8 @@ export function Home() {
           <Input
             label="Descrição"
           />
-          <Input
-            label="Imagem"
+          <ButtonImage  
+            onPress={handleCamera}
           />
           <Button
             title="Enviar"

@@ -8,7 +8,10 @@ export default {
     white: '#FFFFFF',
     black: '#222222',
 
-    error: '#f40000'
+    error: '#f40000',
+    gray: {
+      400: '#9ca3af'
+    }
   },
   fontFamily: {
     montserratRegular: 'Montserrat_400Regular',
