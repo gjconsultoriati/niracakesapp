@@ -11,9 +11,10 @@ export const Container = styled.View`
 `;
 
 export const Label = styled.Text`
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.secondary};
+  font-size: 16px;
+  color:  ${({ theme }) => theme.colors.secondary};
   font-family: ${({ theme }) => theme.fontFamily.quicksand};
+  font-weight: bold;
 `;
 
 export const Input = styled.TextInput<TextInputPropsStyle>`

@@ -1,7 +1,11 @@
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { api } from '../../lib/api';
+import { PostCakeValidationFormData, postCakeValidationSchema } from '../../utils/validations/PostCakeValidation/postCakeValidation';
 
 type ImagePropsDTO = {
   creationTime: number;
@@ -14,12 +18,34 @@ type ImagePropsDTO = {
     modificationTime: number;
     uri: string;
     width: number;
-
 }
 export function useHome() {
   const [images, setImages] = useState<ImagePropsDTO[]>([]);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-  console.log(images)
+  const [isFocused, setIsFocused] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const {
+    control,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting,
+    }
+  } = useForm<PostCakeValidationFormData>({
+    resolver: zodResolver(postCakeValidationSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+    }
+  })
+
+  function hasErrorInput() {
+    if(errors.name?.message && errors.description?.message){
+      setIsFocused(true)
+    } else{ 
+      setIsFocused(false)
+    }
+  }
   async function handleCamera() {
     if (!permissionResponse?.granted) {
       requestPermission();  
@@ -58,6 +84,28 @@ export function useHome() {
     } 
   }
 
+  async function sendCakePost(data: PostCakeValidationFormData){
+
+    try {
+      setIsLoading(true)
+      // Enviando os dados do formulário para o backend
+      
+      const response = await api.post('/cakes', data);
+      console.log('Resposta do servidor:', response.data);
+      alert('Bolo enviado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao enviar bolo:', error);
+      alert('Erro ao enviar bolo. Por favor, tente novamente.');
+    } finally {
+      setIsLoading(false)
+    }
+  
+    alert('clicou')
+    console.log('DAta', data)
+    console.log(images[0].uri)    
+
+  }
+
   function handleRemovePhoto() {
     setImages([])
   }
@@ -65,6 +113,14 @@ export function useHome() {
   return {
     images,
     handleCamera,
-    handleRemovePhoto
+    handleRemovePhoto,
+    control,
+    hasErrorInput,
+    isFocused,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    sendCakePost,
+    isLoading
   }
 }

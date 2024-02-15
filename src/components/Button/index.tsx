@@ -12,8 +12,8 @@ export function Button({ title, loading, disabled, ...rest }: ButtonProps) {
 
   return (
     <Container
-      {...rest}
-      disabled={disabled}
+    disabled={disabled}
+    {...rest}
     >
       {
         loading ?
